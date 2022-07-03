@@ -6,7 +6,8 @@
         "jest/globals": true
     },
     "extends": [
-        "airbnb-base"
+        "airbnb-base",
+        "plugin:jest/recommended"
     ],
     "parserOptions": {
         "ecmaVersion": "latest"
