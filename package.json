@@ -12,10 +12,15 @@
     "morgan": "^1.10.0",
     "pino": "^8.1.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^8.19.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0"
+  },
   "scripts": {
     "test": "jest",
     "docker": "docker-compose --file docker/development/docker-compose.yml up -d --force-recreate",
+    "init": "eslint --init",
     "start": "node index.js"
   },
   "repository": {
