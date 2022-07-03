@@ -26,8 +26,8 @@ const memberSchema = new mongoose.Schema({
     type: String,
     enum: {
       values: ['PENDING', 'ACCEPTED'],
-      message: '{VALUE} is not supported'
-    }
+      message: '{VALUE} is not supported',
+    },
   },
 }, { timestamps: true });
 
