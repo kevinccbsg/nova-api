@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const compression = require('compression');
+const api = require('./routes/api');
 
 const app = express();
 
@@ -16,6 +17,7 @@ const startServer = () => new Promise((resolve) => {
   }));
   app.use(compression());
   app.use(morgan('tiny', { skip: () => process.env.NODE_ENV === 'test' }));
+  app.use('/api/v1', api());
 
   resolve({ app });
 });

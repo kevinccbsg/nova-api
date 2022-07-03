@@ -8,9 +8,9 @@ describe('Members endpoints', () => {
     request = supertest(app);
   });
 
-  describe('POST "/members/:memberId/nominations"', () => {
+  describe('POST "/api/v1/members/:memberId/nominations"', () => {
     it('should return 200 OK', () => (
-      request.post('/members/id/nominations')
+      request.post('/api/v1/members/id/nominations')
       .expect(200)
     ));
   });
