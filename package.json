@@ -1,0 +1,35 @@
+{
+  "name": "nova-api",
+  "version": "1.0.0",
+  "description": "An API to register nominations",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "compression": "^1.7.4",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "helmet": "^5.1.0",
+    "morgan": "^1.10.0",
+    "pino": "^8.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "jest",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevinccbsg/nova-api.git"
+  },
+  "keywords": [
+    "mongo",
+    "api",
+    "nova"
+  ],
+  "author": "kevin martinez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kevinccbsg/nova-api/issues"
+  },
+  "homepage": "https://github.com/kevinccbsg/nova-api#readme"
+}
