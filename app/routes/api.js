@@ -9,7 +9,11 @@ const initRouter = ({ controller }) => {
       const newMember = await controller.nominateNewMember(req.body);
       return res.status(201).json(newMember);
     } catch (error) {
-      return next(tagError(error));
+      const dbErrorTypes = {
+        'db-conflict-error': 409,
+        'db-error': 500,
+      };
+      return next(tagError(error, dbErrorTypes));
     }
   });
 

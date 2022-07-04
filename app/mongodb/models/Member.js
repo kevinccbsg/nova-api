@@ -8,7 +8,7 @@ const memberSchema = new mongoose.Schema({
       return uuidv4();
     },
   },
-  email: { type: String, required: true, index: true },
+  email: { type: String, required: true, index: true, unique: true },
   description: { type: String, required: true },
   involvement: {
     type: Number,
@@ -25,7 +25,7 @@ const memberSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: {
-      values: ['PENDING', 'ACCEPTED'],
+      values: ['REJECTED', 'ACCEPTED'],
       message: '{VALUE} is not supported',
     },
   },
