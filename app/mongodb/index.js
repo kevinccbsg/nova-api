@@ -32,11 +32,34 @@ const start = async (options) => {
     }
   };
 
+  const getNominations = async () => {
+    const nominations = await Nomination.aggregate([
+      { $match: {} },
+      {
+        $project: {
+          _id: 0,
+          id: 1,
+          email: 1,
+          description: 1,
+          score: {
+            involvement: '$involvement',
+            talent: '$talent',
+          },
+          referrer: 1,
+          dateReferred: '$createdAt',
+          status: 1
+        },
+      },
+    ]);
+    return nominations;
+  };
+
   return {
     dbInstance: mongoose,
     models: { Nomination },
     store: {
       nominateNewMember,
+      getNominations,
     },
   };
 };

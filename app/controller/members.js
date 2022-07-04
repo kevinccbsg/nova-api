@@ -15,7 +15,13 @@ const start = ({ store, logger, config }) => {
     return { id: newNomination.id };
   };
 
-  return { nominateNewMember };
+  const getNominations = async () => {
+    logger.info('Retrieving nominations...');
+    const nominations = await store.getNominations();
+    return nominations;
+  };
+
+  return { nominateNewMember, getNominations };
 };
 
 module.exports = start;

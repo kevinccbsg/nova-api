@@ -21,7 +21,7 @@ describe('Members endpoints', () => {
   });
 
   describe('POST "/api/v1/members/:memberId/nominations"', () => {
-    it('should 400 BAD REQUEST when response is incomplete', () => (
+    it('should return 400 BAD REQUEST when response is incomplete', () => (
       request.post('/api/v1/members/nova-member/nominations')
         .send({
           email: 'eren@snk.com',
@@ -34,7 +34,7 @@ describe('Members endpoints', () => {
         })
     ));
 
-    it('should 400 BAD REQUEST when score has invalid values (talent: -10)', () => (
+    it('should return 400 BAD REQUEST when score has invalid values (talent: -10)', () => (
       request.post('/api/v1/members/nova-member/nominations')
         .send({
           email: 'eren@snk.com',
@@ -51,7 +51,7 @@ describe('Members endpoints', () => {
         })
     ));
 
-    it('should 400 BAD REQUEST when score has invalid values (involvement: 88)', () => (
+    it('should return 400 BAD REQUEST when score has invalid values (involvement: 88)', () => (
       request.post('/api/v1/members/nova-member/nominations')
         .send({
           email: 'eren@snk.com',
@@ -160,6 +160,36 @@ describe('Members endpoints', () => {
             status: 'REJECTED',
             referrer: 'nova-member',
           });
+        })
+    ));
+  });
+
+  describe('GET "/api/v1/nominations"', () => {
+    it('should return 200 OK whith empty list', () => (
+      request.get('/api/v1/nominations')
+        .expect(200)
+        .then(({ body }) => {
+          expect(body.data).toHaveLength(0);
+        })
+    ));
+
+    it('should return 200 OK whith one element in the list', () => (
+      request.post('/api/v1/members/nova-member/nominations')
+        .send({
+          email: 'eren@snk.com',
+          description: 'has a great power for nova platform',
+          score: {
+            involvement: 8,
+            talent: 10,
+          },
+        })
+        .expect(201)
+        .then(() => (
+          request.get('/api/v1/nominations')
+            .expect(200)
+        ))
+        .then(async ({ body }) => {
+          expect(body.data).toHaveLength(1);
         })
     ));
   });
