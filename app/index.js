@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { handleHttpError } = require('error-handler-module');
 const morgan = require('morgan');
+const cors = require('cors');
 const helmet = require('helmet');
 const compression = require('compression');
 const mongodb = require('./mongodb');
@@ -29,6 +30,7 @@ const startServer = async ({ email } = {}) => {
   }));
   app.use(compression());
   app.use(morgan('tiny', { skip: () => process.env.NODE_ENV === 'test' }));
+  app.use(cors());
   app.use('/api/v1', api({
     controller: members({
       store,
