@@ -1,5 +1,6 @@
 const express = require('express');
 const { tagError } = require('error-handler-module');
+const { dbErrorTypes } = require('../constants/errorCodes');
 
 const router = express.Router();
 
@@ -9,10 +10,6 @@ const initRouter = ({ controller }) => {
       const newMember = await controller.nominateNewMember(req.params.memberId, req.body);
       return res.status(201).json(newMember);
     } catch (error) {
-      const dbErrorTypes = {
-        'db-conflict-error': 409,
-        'db-error': 500,
-      };
       return next(tagError(error, dbErrorTypes));
     }
   });

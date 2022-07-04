@@ -1,7 +1,9 @@
-const start = ({ store, logger }) => {
+const { REJECTED_STATUS, ACCEPTED_STATUS } = require('../constants/app');
+
+const start = ({ store, logger, config }) => {
   const nominateNewMember = async (memberId, nomination) => {
     logger.info('Nominate new member...');
-    const status = nomination.score.talent < 8 ? 'REJECTED' : 'ACCEPTED';
+    const status = nomination.score.talent < config.minLevel ? REJECTED_STATUS : ACCEPTED_STATUS;
     const newNomination = await store.nominateNewMember(memberId, {
       email: nomination.email,
       description: nomination.description,

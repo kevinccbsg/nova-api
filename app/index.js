@@ -24,7 +24,7 @@ const startServer = async () => {
   app.use(compression());
   app.use(morgan('tiny', { skip: () => process.env.NODE_ENV === 'test' }));
   app.use('/api/v1', api({
-    controller: members({ store, logger }),
+    controller: members({ store, logger, config: config.controller }),
   }));
 
   app.use(handleHttpError(logger));

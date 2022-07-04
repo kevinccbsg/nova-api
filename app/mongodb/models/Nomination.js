@@ -24,7 +24,9 @@ const nominationSchema = new mongoose.Schema({
     min: [0, 'Must be at least 0, got {VALUE}'],
     max: [10, 'Must be at least 0, got {VALUE}'],
   },
-  referrer: { type: String, index: true, unique: true, required: true },
+  referrer: {
+    type: String, index: true, unique: true, required: true,
+  },
   status: {
     type: String,
     enum: {

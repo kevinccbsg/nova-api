@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 const { errorFactory } = require('error-handler-module');
+const { DB_ERROR, DB_CONFLICT } = require('../constants/errorCodes');
 const Nomination = require('./models/Nomination');
 
-const dbConflict = errorFactory('db-conflict-error');
-const dbError = errorFactory('db-error');
+const dbConflict = errorFactory(DB_CONFLICT);
+const dbError = errorFactory(DB_ERROR);
 
 const start = async (options) => {
   await mongoose.connect(options.uri);
