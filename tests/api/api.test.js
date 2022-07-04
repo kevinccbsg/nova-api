@@ -13,7 +13,7 @@ describe('Members endpoints', () => {
   });
 
   beforeEach(async () => {
-    await mongoModels.Member.deleteMany({});
+    await mongoModels.Nomination.deleteMany({});
   });
 
   afterAll(async () => {
@@ -44,11 +44,11 @@ describe('Members endpoints', () => {
             })
             .expect(409)
             .then(async () => {
-              const members = await mongoModels.Member.find();
-              expect(members).toHaveLength(1);
-              const [newMember] = members;
-              expect(newMember).toHaveProperty('id', 'email', 'description', 'talent', 'createdAt', 'updatedAt', 'status');
-              expect(newMember).toMatchObject({
+              const nominations = await mongoModels.Nomination.find();
+              expect(nominations).toHaveLength(1);
+              const [newNomination] = nominations;
+              expect(newNomination).toHaveProperty('id', 'email', 'description', 'talent', 'createdAt', 'updatedAt', 'status');
+              expect(newNomination).toMatchObject({
                 email: 'eren@snk.com',
                 description: 'has a great power for nova platform',
                 involvement: 8,
@@ -72,11 +72,11 @@ describe('Members endpoints', () => {
         .expect(201)
         .then(async ({ body }) => {
           expect(body).toHaveProperty('id');
-          const members = await mongoModels.Member.find();
-          expect(members).toHaveLength(1);
-          const [newMember] = members;
-          expect(newMember).toHaveProperty('id', 'email', 'description', 'talent', 'createdAt', 'updatedAt', 'status');
-          expect(newMember).toMatchObject({
+          const nominations = await mongoModels.Nomination.find();
+          expect(nominations).toHaveLength(1);
+          const [newNomination] = nominations;
+          expect(newNomination).toHaveProperty('id', 'email', 'description', 'talent', 'createdAt', 'updatedAt', 'status');
+          expect(newNomination).toMatchObject({
             email: 'eren@snk.com',
             description: 'has a great power for nova platform',
             involvement: 8,
@@ -99,10 +99,10 @@ describe('Members endpoints', () => {
         .expect(201)
         .then(async ({ body }) => {
           expect(body).toHaveProperty('id');
-          const members = await mongoModels.Member.find();
-          expect(members).toHaveLength(1);
-          const [newMember] = members;
-          expect(newMember).toMatchObject({
+          const nominations = await mongoModels.Nomination.find();
+          expect(nominations).toHaveLength(1);
+          const [newNomination] = nominations;
+          expect(newNomination).toMatchObject({
             email: 'eren@snk.com',
             description: 'has a great power for nova platform',
             involvement: 8,

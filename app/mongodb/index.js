@@ -1,9 +1,6 @@
 const mongoose = require('mongoose');
-const {
-  CustomErrorTypes,
-  errorFactory,
-} = require('error-handler-module');
-const Member = require('./models/Member');
+const { errorFactory } = require('error-handler-module');
+const Nomination = require('./models/Nomination');
 
 const dbConflict = errorFactory('db-conflict-error');
 const dbError = errorFactory('db-error');
@@ -16,11 +13,11 @@ const start = async (options) => {
       const {
         email, description, involvement, talent, status,
       } = memberPayload;
-      const newMemeber = new Member({
+      const newNomination = new Nomination({
         email, description, involvement, talent, status,
       });
-      const member = await newMemeber.save();
-      return { id: member.id };
+      const nomination = await newNomination.save();
+      return { id: nomination.id };
     } catch (error) {
       if (error.message.includes('E11000 duplicate key error collection')) {
         throw dbConflict(error.message);
@@ -31,7 +28,7 @@ const start = async (options) => {
 
   return {
     dbInstance: mongoose,
-    models: { Member },
+    models: { Nomination },
     store: {
       nominateNewMember,
     },

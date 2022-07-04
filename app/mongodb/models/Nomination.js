@@ -1,14 +1,16 @@
 const mongoose = require('mongoose');
 const { v4: uuidv4 } = require('uuid');
 
-const memberSchema = new mongoose.Schema({
+const nominationSchema = new mongoose.Schema({
   id: {
     type: String,
     default: function genUUID() {
       return uuidv4();
     },
   },
-  email: { type: String, required: true, index: true, unique: true },
+  email: {
+    type: String, required: true, index: true, unique: true,
+  },
   description: { type: String, required: true },
   involvement: {
     type: Number,
@@ -31,6 +33,6 @@ const memberSchema = new mongoose.Schema({
   },
 }, { timestamps: true });
 
-const Trip = mongoose.model('Member', memberSchema);
+const Trip = mongoose.model('Nomination', nominationSchema);
 
 module.exports = Trip;

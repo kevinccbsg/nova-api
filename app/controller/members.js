@@ -2,7 +2,7 @@ const start = ({ store, logger }) => {
   const nominateNewMember = async (member) => {
     logger.info('Nominate new member...');
     const status = member.score.talent < 8 ? 'REJECTED' : 'ACCEPTED';
-    const newMember = await store.nominateNewMember({
+    const newNomination = await store.nominateNewMember({
       email: member.email,
       description: member.description,
       involvement: member.score.involvement,
@@ -10,7 +10,7 @@ const start = ({ store, logger }) => {
       status,
     });
     logger.info('new member Nominated...');
-    return { id: newMember.id };
+    return { id: newNomination.id };
   };
 
   return { nominateNewMember };
