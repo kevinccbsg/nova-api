@@ -1,7 +1,9 @@
 const { REJECTED_STATUS, ACCEPTED_STATUS } = require('../constants/app');
 
-const start = ({ store, logger, config, email }) => {
-  const isRejected = talent => talent < config.minLevel;
+const start = ({
+  store, logger, config, email,
+}) => {
+  const isRejected = (talent) => talent < config.minLevel;
   const nominateNewMember = async (memberId, nomination) => {
     logger.info('Nominate new member...');
     const status = isRejected(nomination.score.talent) ? REJECTED_STATUS : ACCEPTED_STATUS;

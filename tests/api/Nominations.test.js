@@ -7,7 +7,9 @@ describe('Members endpoints', () => {
   let dbClient;
   let email;
   beforeAll(async () => {
-    const { app, testingHelper, dbInstance, emailDependency } = await startServer({
+    const {
+      app, testingHelper, dbInstance, emailDependency,
+    } = await startServer({
       email: {
         sendEmail: jest.fn(),
       },
@@ -158,7 +160,7 @@ describe('Members endpoints', () => {
           expect(email.sendEmail).toHaveBeenCalledWith({
             to: ['eren@snk.com'],
             subject: 'Nomination rejected',
-          })
+          });
           expect(body).toHaveProperty('id');
           const nominations = await mongoModels.Nomination.find();
           expect(nominations).toHaveLength(1);

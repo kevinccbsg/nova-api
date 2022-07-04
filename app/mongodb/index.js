@@ -47,7 +47,7 @@ const start = async (options) => {
           },
           referrer: 1,
           dateReferred: '$createdAt',
-          status: 1
+          status: 1,
         },
       },
     ]);

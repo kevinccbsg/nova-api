@@ -1,7 +1,6 @@
-const logger = require('../../utils/logger')
+const logger = require('../../utils/logger');
 
-
-const start = ({ config }) => {
+const start = () => {
   const sendEmail = ({ to, subject }) => {
     logger.info(`Sending email to ${to.join(', ')} with subject: ${subject}`);
     // TODO: add email service method
