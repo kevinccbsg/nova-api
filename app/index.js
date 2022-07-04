@@ -8,7 +8,7 @@ const mongodb = require('./mongodb');
 const config = require('./config');
 const members = require('./controller/members');
 const docsValidator = require('./docsValidator');
-const membersAPI = require('./routes/members');
+const api = require('./routes');
 const logger = require('../utils/logger');
 
 const app = express();
@@ -26,7 +26,7 @@ const startServer = async () => {
   }));
   app.use(compression());
   app.use(morgan('tiny', { skip: () => process.env.NODE_ENV === 'test' }));
-  app.use('/api/v1', membersAPI({
+  app.use('/api/v1', api({
     controller: members({ store, logger, config: config.controller }),
     validators,
   }));

@@ -4,7 +4,7 @@ const { dbErrorTypes } = require('../constants/errorCodes');
 
 const router = express.Router();
 
-const initRouter = ({ controller, validators }) => {
+const initMembers = ({ controller, validators }) => {
   const { validateRequest, validateResponse } = validators;
   /**
    * POST /api/v1/members/{memberId}/nominations
@@ -15,7 +15,7 @@ const initRouter = ({ controller, validators }) => {
    * @return 409 - Already a nomination
    * @return 500 - Internal server error
    */
-  router.post('/members/:memberId/nominations', validateRequest(), async (req, res, next) => {
+  router.post('/:memberId/nominations', validateRequest(), async (req, res, next) => {
     try {
       const newMember = await controller.nominateNewMember(req.params.memberId, req.body);
       validateResponse(newMember, req, 201);
@@ -28,4 +28,4 @@ const initRouter = ({ controller, validators }) => {
   return router;
 };
 
-module.exports = initRouter;
+module.exports = initMembers;
