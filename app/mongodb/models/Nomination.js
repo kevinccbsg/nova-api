@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { v4: uuidv4 } = require('uuid');
+const { NOMINATION_STATUS } = require('../../constants/app');
 
 const nominationSchema = new mongoose.Schema({
   id: {
@@ -30,7 +31,7 @@ const nominationSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: {
-      values: ['REJECTED', 'ACCEPTED'],
+      values: NOMINATION_STATUS,
       message: '{VALUE} is not supported',
     },
   },
