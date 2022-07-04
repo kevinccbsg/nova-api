@@ -8,13 +8,18 @@ const dbError = errorFactory('db-error');
 const start = async (options) => {
   await mongoose.connect(options.uri);
 
-  const nominateNewMember = async (memberPayload) => {
+  const nominateNewMember = async (memberId, nominationPayload) => {
     try {
       const {
         email, description, involvement, talent, status,
-      } = memberPayload;
+      } = nominationPayload;
       const newNomination = new Nomination({
-        email, description, involvement, talent, status,
+        email,
+        description,
+        involvement,
+        talent,
+        status,
+        referrer: memberId,
       });
       const nomination = await newNomination.save();
       return { id: nomination.id };

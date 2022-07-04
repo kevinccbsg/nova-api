@@ -6,7 +6,7 @@ const router = express.Router();
 const initRouter = ({ controller }) => {
   router.post('/members/:memberId/nominations', async (req, res, next) => {
     try {
-      const newMember = await controller.nominateNewMember(req.body);
+      const newMember = await controller.nominateNewMember(req.params.memberId, req.body);
       return res.status(201).json(newMember);
     } catch (error) {
       const dbErrorTypes = {
