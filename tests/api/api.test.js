@@ -28,6 +28,10 @@ describe('Members endpoints', () => {
           description: 'has a great power for nova platform',
         })
         .expect(400)
+        .then((response) => {
+          expect(response.body.message.includes('must have required property \'score\''))
+            .toEqual(true);
+        })
     ));
 
     it('should 400 BAD REQUEST when score has invalid values (talent: -10)', () => (
@@ -42,7 +46,8 @@ describe('Members endpoints', () => {
         })
         .expect(400)
         .then((response) => {
-          expect(response.body.message.includes('Schema Score/properties/talent must be >= 0')).toEqual(true);
+          expect(response.body.message.includes('Schema Score/properties/talent must be >= 0'))
+            .toEqual(true);
         })
     ));
 
@@ -58,7 +63,8 @@ describe('Members endpoints', () => {
         })
         .expect(400)
         .then((response) => {
-          expect(response.body.message.includes('Schema Score/properties/involvement must be <= 10')).toEqual(true);
+          expect(response.body.message.includes('Schema Score/properties/involvement must be <= 10'))
+            .toEqual(true);
         })
     ));
 
@@ -101,7 +107,8 @@ describe('Members endpoints', () => {
         ))
     ));
 
-    it('should return 200 OK and register a new member with 10 points of talent, so it should be marked as accepted', () => (
+    it(`should return 200 OK and register a new member with 10 points of talent.
+      Therefore, it should be marked as accepted`, () => (
       request.post('/api/v1/members/nova-member/nominations')
         .send({
           email: 'eren@snk.com',
