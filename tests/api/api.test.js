@@ -21,6 +21,47 @@ describe('Members endpoints', () => {
   });
 
   describe('POST "/api/v1/members/:memberId/nominations"', () => {
+    it('should 400 BAD REQUEST when response is incomplete', () => (
+      request.post('/api/v1/members/nova-member/nominations')
+        .send({
+          email: 'eren@snk.com',
+          description: 'has a great power for nova platform',
+        })
+        .expect(400)
+    ));
+
+    it('should 400 BAD REQUEST when score has invalid values (talent: -10)', () => (
+      request.post('/api/v1/members/nova-member/nominations')
+        .send({
+          email: 'eren@snk.com',
+          description: 'has a great power for nova platform',
+          score: {
+            involvement: 8,
+            talent: -10,
+          },
+        })
+        .expect(400)
+        .then((response) => {
+          expect(response.body.message.includes('Schema Score/properties/talent must be >= 0')).toEqual(true);
+        })
+    ));
+
+    it('should 400 BAD REQUEST when score has invalid values (involvement: 88)', () => (
+      request.post('/api/v1/members/nova-member/nominations')
+        .send({
+          email: 'eren@snk.com',
+          description: 'has a great power for nova platform',
+          score: {
+            involvement: 80,
+            talent: 10,
+          },
+        })
+        .expect(400)
+        .then((response) => {
+          expect(response.body.message.includes('Schema Score/properties/involvement must be <= 10')).toEqual(true);
+        })
+    ));
+
     it('should not store duplicated recomendations', () => (
       request.post('/api/v1/members/nova-member/nominations')
         .send({
