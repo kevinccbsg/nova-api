@@ -4,7 +4,7 @@
 
 Nova challenge API. This is an node js API with MongoDB as DB. This API has two endpoints. One to register nominations and the other one to show all the nominations. You can check out the docs in [this page](https://nova-challenge-api.herokuapp.com/api-docs/).
 
-![alt text](https://github.com/kevinccbsg//nova-api/blob/main/images/swagger.png "nova docs")
+![alt text](https://github.com/kevinccbsg/nova-api/blob/main/images/swagger.png "nova docs")
 
 ## How to collaborate
 
@@ -45,7 +45,7 @@ If you want to run the tests:
 npm test
 ```
 
-We really recommend to run tests with this ENV variable while you are adding new features to check API errors.
+We really recommend you to run tests using this ENV variable while you are adding new features to check API errors.
 
 ```
 DEBUG=error* npm test
