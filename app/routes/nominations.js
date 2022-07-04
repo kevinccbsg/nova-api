@@ -1,5 +1,6 @@
 const express = require('express');
 const { tagError } = require('error-handler-module');
+const limiter = require('../../utils/limiter');
 const { dbErrorTypes } = require('../constants/errorCodes');
 
 const router = express.Router();
@@ -12,7 +13,7 @@ const initNominations = ({ controller, validators }) => {
    * @return {NominationListResponse} 200 - Nomination response
    * @return 500 - Internal server error
    */
-  router.get('/', async (req, res, next) => {
+  router.get('/', limiter, async (req, res, next) => {
     try {
       const nominations = await controller.getNominations();
       const response = {

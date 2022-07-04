@@ -1,5 +1,6 @@
 const express = require('express');
 const { tagError } = require('error-handler-module');
+const limiter = require('../../utils/limiter');
 const { dbErrorTypes } = require('../constants/errorCodes');
 
 const router = express.Router();
@@ -15,7 +16,7 @@ const initMembers = ({ controller, validators }) => {
    * @return 409 - Already a nomination
    * @return 500 - Internal server error
    */
-  router.post('/:memberId/nominations', validateRequest(), async (req, res, next) => {
+  router.post('/:memberId/nominations', validateRequest(), limiter, async (req, res, next) => {
     try {
       const newMember = await controller.nominateNewMember(req.params.memberId, req.body);
       validateResponse(newMember, req, 201);
