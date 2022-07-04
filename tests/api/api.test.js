@@ -22,7 +22,7 @@ describe('Members endpoints', () => {
 
   describe('POST "/api/v1/members/:memberId/nominations"', () => {
     it('should not store duplicated recomendations', () => (
-      request.post('/api/v1/members/id/nominations')
+      request.post('/api/v1/members/nova-member/nominations')
         .send({
           email: 'eren@snk.com',
           description: 'has a great power for nova platform',
@@ -33,7 +33,7 @@ describe('Members endpoints', () => {
         })
         .expect(201)
         .then(() => (
-          request.post('/api/v1/members/id/nominations')
+          request.post('/api/v1/members/nova-member/nominations')
             .send({
               email: 'eren@snk.com',
               description: 'has a great power for nova platform',
@@ -54,13 +54,14 @@ describe('Members endpoints', () => {
                 involvement: 8,
                 talent: 10,
                 status: 'ACCEPTED',
+                referrer: 'nova-member',
               });
             })
         ))
     ));
 
     it('should return 200 OK and register a new member with 10 points of talent, so it should be marked as accepted', () => (
-      request.post('/api/v1/members/id/nominations')
+      request.post('/api/v1/members/nova-member/nominations')
         .send({
           email: 'eren@snk.com',
           description: 'has a great power for nova platform',
@@ -82,12 +83,13 @@ describe('Members endpoints', () => {
             involvement: 8,
             talent: 10,
             status: 'ACCEPTED',
+            referrer: 'nova-member',
           });
         })
     ));
 
     it('should return 200 OK and register a new member with 2 points of talent, so it should be marked as accepted', () => (
-      request.post('/api/v1/members/id/nominations')
+      request.post('/api/v1/members/nova-member/nominations')
         .send({
           email: 'eren@snk.com',
           description: 'has a great power for nova platform',
@@ -108,6 +110,7 @@ describe('Members endpoints', () => {
             involvement: 8,
             talent: 2,
             status: 'REJECTED',
+            referrer: 'nova-member',
           });
         })
     ));
