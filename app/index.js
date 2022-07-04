@@ -9,11 +9,14 @@ const config = require('./config');
 const members = require('./controller/members');
 const docsValidator = require('./docsValidator');
 const api = require('./routes');
+const emailService = require('./email');
 const logger = require('../utils/logger');
 
 const app = express();
 
-const startServer = async () => {
+const startServer = async ({ email } = {}) => {
+  // This is useful for testing mocking
+  const emailDependency = email || emailService;
   const validators = await docsValidator({ app, config: config.swagger });
   const { dbInstance, store, models } = await mongodb(config.mongo);
 
@@ -27,8 +30,14 @@ const startServer = async () => {
   app.use(compression());
   app.use(morgan('tiny', { skip: () => process.env.NODE_ENV === 'test' }));
   app.use('/api/v1', api({
-    controller: members({ store, logger, config: config.controller }),
+    controller: members({
+      store,
+      logger,
+      config: config.controller,
+      email: emailDependency,
+    }),
     validators,
+    email,
   }));
 
   app.use(handleHttpError(logger));
@@ -39,6 +48,7 @@ const startServer = async () => {
     testingHelper: process.env.NODE_ENV === 'test' ? {
       mongo: models,
     } : {},
+    emailDependency,
   };
 };
 

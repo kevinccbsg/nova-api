@@ -5,11 +5,17 @@ describe('Members endpoints', () => {
   let request;
   let mongoModels;
   let dbClient;
+  let email;
   beforeAll(async () => {
-    const { app, testingHelper, dbInstance } = await startServer();
+    const { app, testingHelper, dbInstance, emailDependency } = await startServer({
+      email: {
+        sendEmail: jest.fn(),
+      },
+    });
     request = supertest(app);
     mongoModels = testingHelper.mongo;
     dbClient = dbInstance;
+    email = emailDependency;
   });
 
   beforeEach(async () => {
@@ -120,6 +126,7 @@ describe('Members endpoints', () => {
         })
         .expect(201)
         .then(async ({ body }) => {
+          expect(email.sendEmail).not.toHaveBeenCalled();
           expect(body).toHaveProperty('id');
           const nominations = await mongoModels.Nomination.find();
           expect(nominations).toHaveLength(1);
@@ -136,7 +143,7 @@ describe('Members endpoints', () => {
         })
     ));
 
-    it('should return 200 OK and register a new member with 2 points of talent, so it should be marked as accepted', () => (
+    it('should return 200 OK and register a new member with 2 points of talent, so it should be marked as rejected', () => (
       request.post('/api/v1/members/nova-member/nominations')
         .send({
           email: 'eren@snk.com',
@@ -148,6 +155,10 @@ describe('Members endpoints', () => {
         })
         .expect(201)
         .then(async ({ body }) => {
+          expect(email.sendEmail).toHaveBeenCalledWith({
+            to: ['eren@snk.com'],
+            subject: 'Nomination rejected',
+          })
           expect(body).toHaveProperty('id');
           const nominations = await mongoModels.Nomination.find();
           expect(nominations).toHaveLength(1);
